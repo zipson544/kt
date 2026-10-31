@@ -1,0 +1,107 @@
+drop_items_if_full_inventory: false
+claim_kit_short_command: false
+close_inventory_on_claim: false
+kit_preview: true
+kit_preview_requires_kit_permission: false
+first_join_kit: none
+new_kit_default_save_mode_original: true
+new_kit_default_inventory: "main_inventory"
+new_kit_default_values:
+  cooldown: 3600
+  permission_required: false
+  actions:
+    claim:
+      1:
+        action: "playsound: BLOCK_NOTE_BLOCK_PLING;10;2"
+    error:
+      1:
+        action: "playsound: BLOCK_NOTE_BLOCK_PLING;10;0.1"
+  display:
+    default:
+      id: STONE_SWORD
+      name: "&c&l%kit_name% &cKit"
+      lore:
+        - '&fThis is a description of the kit.'
+        - ''
+        - '&7Edit it on the &c%kit_name%.yml &7file'
+        - '&7or using &c/kit edit %kit_name%'
+      item_flags:
+        - HIDE_ATTRIBUTES
+    no_permission:
+      id: BARRIER
+      name: "&c&l%kit_name% &cKit"
+      lore:
+        - "&cYou don't have permissions to claim"
+        - "&cthis kit."
+    cooldown:
+      id: STONE_SWORD
+      name: "&c&l%kit_name% &cKit"
+      lore:
+        - "&cYou need to wait &7%time%"
+        - "&cto claim this kit again."
+      item_flags:
+        - HIDE_ATTRIBUTES
+player_data_save_time: 300
+update_notify: true
+use_minimessage: false
+mysql_database:
+  enabled: false
+  host: localhost
+  port: 3306
+  username: root
+  password: root
+  database: database
+  pool:
+    connectionTimeout: 5000
+  advanced:
+    verifyServerCertificate: false
+    useSSL: true
+    allowPublicKeyRetrieval: true
+
+# ---------------------------------------------------------------------------
+# CLAIM GUI - przedmioty z zestawu odbiera sie recznie
+# true  = klik w zestaw otwiera jego strone z przyciskiem "Odbierz". Po kliknieciu
+#         otwiera sie okno "Odbierz przedmioty", z ktorego gracz wyjmuje przedmioty
+#         sam. Nic sie nie sypie na ziemie. Cooldown startuje dopiero, gdy gracz
+#         wyjmie WSZYSTKIE przedmioty. Co zostalo w oknie, czeka na gracza (takze po restarcie).
+# false = stare zachowanie PlayerKits2 (przedmioty od razu w ekwipunku)
+claim_in_gui: true
+claim_gui:
+  title: "&8Odbierz przedmioty"
+  # Slot przycisku na stronie zestawu (preview_inventory w inventory.yml)
+  button_slot: 43
+  # Akcje po wyjeciu wszystkich przedmiotow (te same akcje co w zestawach)
+  complete_actions:
+    - "playsound: ENTITY_EXPERIENCE_ORB_PICKUP;10;1"
+    - "title: 0;40;10;none;&a&lOdebrano wszystkie przedmioty!"
+  # Wyglad przycisku. Mozna uzyc tych samych pol co w przedmiotach zestawow
+  # (id, name, lore, custom_model_data, item_flags...). Zmienne: %time% %kit_name%
+  buttons:
+    # Mozna odebrac (zielony)
+    ready:
+      id: LIME_DYE
+      name: "&e&lOdbierz przedmioty z zestawu!"
+      lore:
+        - "&7» Kliknij, aby odebrać przedmioty."
+    # Zacząłeś odbierać, ale w oknie coś zostało (zielony)
+    pending:
+      id: LIME_DYE
+      name: "&e&lOdbierz przedmioty z zestawu!"
+      lore:
+        - "&7» Zostały jeszcze przedmioty do odebrania."
+    # Wszystko odebrane, trwa cooldown (pomarańczowy)
+    cooldown:
+      id: ORANGE_DYE
+      name: "&e&lOdbierz przedmioty z zestawu!"
+      lore:
+        - "&7» Następny raz możesz odebrać za &f%time%&7!"
+    no_permission:
+      id: BARRIER
+      name: "&c&lBrak dostępu"
+      lore:
+        - "&7» Nie masz uprawnień do tego zestawu."
+    one_time:
+      id: BARRIER
+      name: "&c&lJuż odebrano"
+      lore:
+        - "&7» Ten zestaw można odebrać tylko raz."
